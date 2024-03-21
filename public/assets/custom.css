@@ -1,0 +1,68 @@
+#star {
+    color: #edc43d;
+}
+
+#border-star {
+    border: 2px;
+    border-color: #edc43d;
+}
+
+#newEnvelopeImage:hover,
+#newEnvelopeImage2:hover,
+#bikepng:hover,
+#carpng:hover,
+#cleaningpng:hover,
+#clothespng:hover,
+#fishingpng:hover,
+#foodpng:hover,
+#gamingpng:hover,
+#holidaypng:hover,
+#insurancepng:hover,
+#mortgagepng:hover,
+#petpng:hover,
+#rainypng:hover,
+#bikepng2:hover,
+#carpng2:hover,
+#cleaningpng2:hover,
+#clothespng2:hover,
+#fishingpng2:hover,
+#foodpng2:hover,
+#gamingpng2:hover,
+#holidaypng2:hover,
+#insurancepng2:hover,
+#mortgagepng2:hover,
+#petpng2:hover,
+#rainypng2:hover {
+    cursor: pointer;
+}
+
+.car-img {
+    height: 100px;
+}
+
+.arrow {
+    border: solid #edc43d;
+    border-width: 0 6px 6px 0;
+    display: inline-block;
+    padding: 8px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
