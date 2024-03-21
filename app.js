@@ -21,4 +21,8 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/', (req, res) => {
+    res.render('base', { title: "Envelop Budgeting" });
+});
+
 app.listen(port, () => { console.log(`Listening on port: ${port}`) });
