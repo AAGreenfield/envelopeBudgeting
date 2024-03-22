@@ -18,7 +18,19 @@ const checkUser = async (signupUsername) => {
     try {
         const { rows } = await pool.query(`SELECT * FROM users WHERE username = '${signupUsername}'`);
         if (rows[0]) {
-            console.log(`Here at check USer ${rows[0]}`)
+            return rows[0];
+        } else {
+            return false;
+        }
+    } catch (err){
+        console.log(err);
+    }
+};
+
+const checkEmail = async (signupEmail) => {
+    try {
+        const { rows } = await pool.query(`SELECT * FROM users WHERE email = '${signupEmail}'`);
+        if (rows[0]) {
             return rows[0];
         } else {
             return false;
@@ -41,8 +53,8 @@ const addUser = async(signupDetails, res) => {
     const id = await getId();
 
     try {
-        const { rows } = await pool.query(`INSERT INTO users (id, username, password) VALUES (${id + 1}, '${signupDetails.signupUsername}', '${signupDetails.signupPassword}')`);
-        res.render('logged', { title: "Account",
+        const { rows } = await pool.query(`INSERT INTO users (id, username, email, password) VALUES (${id + 1}, '${signupDetails.signupUsername}', '${signupDetails.signupEmail}', '${signupDetails.signupPassword}')`);
+        res.render('login/logged', { title: "Account",
             username: `${signupDetails.signupUsername}`
         })
     } catch (err){
@@ -50,13 +62,40 @@ const addUser = async(signupDetails, res) => {
     }
 }
 
+router.get('/signup.js', (eq, res) => {
+    res.sendFile(path.join(__dirname, '/signup.js'));
+})
+
 router.post('/', async (req, res) => {
     const userExists = await checkUser(req.body.signupUsername);
+    const emailExists = await checkEmail(req.body.signupEmail);
 
     if (userExists) {
-        console.log('User Exists');
+        res.render('signup/noSignupUser', {
+            title: "Sign Up",
+            username: req.body.signupUsername,
+            email: req.body.signupEmail,
+            password: req.body.signupPassword
+        })
     } else {
-        addUser(req.body, res);
+        if (emailExists) {
+            res.render('signup/noSignupEmail', {
+                title: "Sign Up",
+                username: req.body.signupUsername,
+                email: req.body.signupEmail,
+                password: req.body.signupPassword
+            })
+        } else {
+            if (req.body.signupPassword === req.body.signupPasswordTwo) {
+                addUser(req.body, res);
+            } else {
+                res.render('signup/noSignupPass', {
+                    title: 'Sign Up',
+                    username: req.body.signupUsername,
+                    email: req.body.signupEmail,
+                })
+            }
+        }
     }
 })
 
