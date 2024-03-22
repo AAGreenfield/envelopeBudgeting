@@ -4,6 +4,9 @@ const port = process.env.PORT || 5000;
 const path = require('path');
 const session = require('express-session');
 
+const login = require('./login/loginRouter');
+const signup = require('./signup/signupRouter');
+
 app.set('view engine', 'ejs');
 
 app.use(express.json());
@@ -15,6 +18,9 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use('/login', login);
+app.use('/signup', signup);
+
 
 app.use((req, res, next) => {
     console.log(`${req.method} - ${req.url}`);
@@ -24,7 +30,11 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.render('base', { title: "Envelop Budgeting" });
+    if (req.session.sessionId > 0) {
+        console.log('Are you sure you want to log out and return to home?')
+    } else {
+        res.render('base', { title: "Envelope Budgeting" });
+    }
 });
 
 app.listen(port, () => { console.log(`Listening on port: ${port}`) });

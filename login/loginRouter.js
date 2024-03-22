@@ -14,5 +14,27 @@ const pool = new Pool({
     ssl: true
 });
 
+router.get('/login.js', (eq, res) => {
+    res.sendFile(path.join(__dirname, '/login.js'));
+})
+
+router.post('/', async (req, res) => {
+    try {
+        const { rows } = await pool.query(`SELECT * FROM users WHERE username = '${req.body.username}'`);
+        if (rows[0]) {
+            if (rows[0].password === req.body.password) {
+		        req.session.sessionId = `${rows[0].id}`;
+                res.render('login/logged', { title: "Account", sessionId: req.session.sessionId, username: req.body.username});
+            } else {
+                res.render('login/noLogPass', { title: "Account", sessionId: req.session.sessionId, username: req.body.username});
+            }
+        } else {
+            res.render('login/noLogUser', { title: "Account", sessionId: req.session.sessionId });
+        }
+    } catch (err){
+        console.log(err);
+    }
+})
+
 
 module.exports = router;
