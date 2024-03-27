@@ -4,7 +4,6 @@ const router = express.Router();
 const path = require('path');
 const { Pool, Client } = require('pg');
 
-
 const pool = new Pool({
     host: "dpg-cntjia6ct0pc739rj0v0-a.oregon-postgres.render.com",
     port: 5432,
@@ -16,7 +15,11 @@ const pool = new Pool({
 
 router.get('/login.js', (eq, res) => {
     res.sendFile(path.join(__dirname, '/login.js'));
-})
+});
+
+// router.get('/logged.js', (eq, res) => {
+//     res.sendFile(path.join(__dirname, '../logged/logged'));
+// })
 
 router.post('/', async (req, res) => {
     try {
