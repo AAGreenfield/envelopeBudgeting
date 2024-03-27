@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     if (req.session.sessionId > 0) {
         console.log('Are you sure you want to log out and return to home?')
+        res.render('base', { title: "Envelope Budgeting" });
     } else {
         res.render('base', { title: "Envelope Budgeting" });
     }
