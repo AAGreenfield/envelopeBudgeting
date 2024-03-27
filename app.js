@@ -37,4 +37,8 @@ app.get('/', (req, res) => {
     }
 });
 
+app.get('/health', (req, res) => {
+    res.sendStatus(200)
+})
+
 app.listen(port, () => { console.log(`Listening on port: ${port}`) });
